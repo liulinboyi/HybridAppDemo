@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <input type="button" value="js调用android方法1" onclick="onAndroidFunction1('js调用android方法1')">
+    <input type="button" value="js调用android方法2" onclick="onAndroidFunction2()">
+    <br>
+    <input type="button" value="js调用IOS方法1" onclick="onIOSFunction1('js调用ios方法1')">
+    <input type="button" value="js调用IOS方法2" onclick="onIOSFunction2()">
+
+    <script>
+        // 调用 Android 方法1
+        function onAndroidFunction1(str) {
+            window.AndroidJSBridge.androidTestFunction1(str);
+        }
+
+        // 调用 Android 方法2
+        function onAndroidFunction2() {
+            var result = window.AndroidJSBridge.androidTestFunction2();
+            alert(result);
+        }
+
+        // Android 调用 onFunction 方法
+        window.onFunction = function (str) {
+            // alert(str);
+            result = window.confirm("hello");
+
+            let res = JSON.stringify({
+                status: result,
+                msg: 'onFunction 方法已经调用完成 此消息来自Webview\n'
+            });
+            console.log(res)
+            return res;
+        }
+
+
+        // ----------------------
+
+        // 调用 IOS 方法1
+        function onIOSFunction1(str) {
+
+            window.webkit.messageHandlers.IOSTestFunction1.postMessage({
+                msg: str
+            });
+        }
+
+        // 调用 IOS 方法2
+        function onIOSFunction2() {
+
+            window.webkit.messageHandlers.IOSTestFunction2.postMessage({});
+        }
+
+        // IOS 回调 onFunctionIOS 方法
+        window.onFunctionIOS = function (str) {
+            alert(str);
+            return 'onFunctionIOS 方法已经调用完成';
+        }
+    </script>
+
+</body>
+</html>
