@@ -10,8 +10,15 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="调用JS方法"
-        android:onClick="onJSFunction1"/>
+        android:onClick="onJSFunction1"
+        android:text="调用JS方法" />
+
+    <!--    <include layout="@layout/toolbar"/>-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/test_scan_qrcode"-->
+    <!--        style="@style/MatchWrapTv"-->
+    <!--        android:text="测试扫描二维码" />-->
 
     <cn.sunday.hybridappdemo.views.X5WebView
         android:id="@+id/web_view"

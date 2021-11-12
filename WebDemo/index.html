@@ -8,13 +8,41 @@
 </head>
 <body>
 
+    <script src="./vconsole.min.js"></script>
+    <script>
+        // VConsole will be exported to `window.VConsole` by default.
+        var vConsole = new window.VConsole();
+    </script>
+
+    <input type="button" value="js调用android扫描二维码" onclick="webwiewScan()">
+    <br>
     <input type="button" value="js调用android方法1" onclick="onAndroidFunction1('js调用android方法1')">
     <input type="button" value="js调用android方法2" onclick="onAndroidFunction2()">
     <br>
     <input type="button" value="js调用IOS方法1" onclick="onIOSFunction1('js调用ios方法1')">
     <input type="button" value="js调用IOS方法2" onclick="onIOSFunction2()">
 
+    <div>扫描二维码的结果是：<span class="scan"></span></div>
+
     <script>
+        let callBacks = {} // 回调函数们
+        let id = 0; // 回调函数Id
+
+        // 在原生端会执行回调函数
+        function call(id, data) {
+            callBacks[id](data)
+        }
+
+        function webwiewScan() {
+            // 回调函数
+            callBacks[id] = (data) => {
+                console.log(data);
+            }
+            window.AndroidJSBridge.webwiewScan(JSON.stringify({
+                msg: "haha",
+                callid: id++,
+            }));
+        }
         // 调用 Android 方法1
         function onAndroidFunction1(str) {
             window.AndroidJSBridge.androidTestFunction1(str);
@@ -39,6 +67,13 @@
             return res;
         }
 
+        window.setScan = function (scan) {
+            // alert(scan);
+            let scanDom = document.querySelector(".scan");
+            scanDom.style.color = "red";
+            scanDom.innerText = scan;
+            return true;
+        }
 
         // ----------------------
 

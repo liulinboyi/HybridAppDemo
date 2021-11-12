@@ -3,13 +3,18 @@ package cn.sunday.hybridappdemo.jsInterface;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import com.tencent.smtt.sdk.ValueCallback;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
+import cn.sunday.hybridappdemo.MainActivity;
 import cn.sunday.hybridappdemo.views.X5WebView;
 
 //可以被Webview调用的安卓原生方法
@@ -21,6 +26,26 @@ public class MyJaveScriptInterface {
     public MyJaveScriptInterface(Context context, X5WebView x5WebView) {
         this.mContext = context;
         this.mWebView = x5WebView;
+    }
+
+    @JavascriptInterface
+    public void webwiewScan(String params) {
+        try {
+            JSONObject json = new JSONObject(params);
+            final String msg = json.optString("msg");
+            final Number id = json.getInt("callid");
+            Log.d("scan", params);
+            MainActivity.instance.webwiewScan();
+//            新版的Android的SDK要求在创建WebView所在的线程中操作它，在其它线程中操作它都会报这样的错误
+            MainActivity.instance.runOnUiThread(new Runnable() {//其中 WebViewActivity 是webview所在的Activity
+                public void run() {
+                    MainActivity.instance.callback(id, msg);
+                }
+            });
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

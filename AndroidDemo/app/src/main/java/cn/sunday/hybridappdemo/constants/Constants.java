@@ -7,5 +7,5 @@ public class Constants {
      * 那么需要对 app 进行安全访问设置。
      * 网页加载路径
      */
-    public static final String WEB_URL = "http://192.168.140.88:8080";
+    public static final String WEB_URL = "https://blog.heyliubo.top/HybridAppDemo/WebDemo/";
 }

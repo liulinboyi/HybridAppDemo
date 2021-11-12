@@ -4,6 +4,7 @@
     package="cn.sunday.hybridappdemo">
 
     <!-- 加上此属性android:usesCleartextTraffic="true"对http请求不报错-->
+    <uses-permission android:name="android.permission.VIBRATE" />
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -21,6 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".TestScanActivity" />
     </application>
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
